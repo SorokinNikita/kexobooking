@@ -1,5 +1,5 @@
 import { declarationsArray } from "./data.js";
-
+import { getRandomInt } from "./util.js";
 const map = document.querySelector('.map');
 
 const card = document.querySelector('#card')
@@ -46,18 +46,25 @@ declarations.forEach(({author, location, offer}) => {
   const child = popupFeatures.children[i];
   child.parentElement.removeChild(child);
 }
-  const featuresItem = offer.features;
-  for (let i = 0; i < featuresItem.length; i++) {
+  for (let i = 0; i < offer.features.length; i++) {
   const popupFeature = document.createElement('li');
   popupFeature.classList.add('popup__feature');
-  popupFeature.classList.add('popup__feature--' + featuresItem[i]);
+  popupFeature.classList.add('popup__feature--' + offer.features[i]);
   popupFeatures.appendChild(popupFeature);
   }
   cardElement.querySelector('.popup__description').textContent = offer.description;
-  cardElement.querySelector('.popup__photos img').src = offer.photos[2];
+  let picture =  cardElement.querySelector('.popup__photos img');
+  let popupPhotos =  cardElement.querySelector('.popup__photos');
+  for (let i = 0; i < offer.photos.length-1; i++) {
+    popupPhotos.appendChild(picture.cloneNode());
+  }
+  let photo = popupPhotos.children;
+  for (let i = 0; i < photo.length; i++) {
+    photo[i].src = offer.photos[i];
+  }
   cardElement.querySelector('.popup__avatar').src = author.avatar;
   fragment.appendChild(cardElement);
 })
 const blocks = fragment.children;
 const parent = document.querySelector('#map-canvas');
-parent.appendChild(blocks[1])
+parent.appendChild(blocks[9]);
