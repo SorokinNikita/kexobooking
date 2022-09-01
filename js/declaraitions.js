@@ -13,7 +13,6 @@ const fragment = document.createDocumentFragment();
 
 declarations.forEach(({author, location, offer}) => {
   const cardElement = card.cloneNode(true);
-  console.log(offer.title);
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
   cardElement.querySelector('.popup__text--price').textContent = offer.price + ' ₽/ночь';
@@ -65,6 +64,7 @@ declarations.forEach(({author, location, offer}) => {
   cardElement.querySelector('.popup__avatar').src = author.avatar;
   fragment.appendChild(cardElement);
 })
+
 const blocks = fragment.children;
-const parent = document.querySelector('#map-canvas');
-parent.appendChild(blocks[9]);
+
+export {blocks}

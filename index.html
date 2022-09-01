@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="leaflet/leaflet/leaflet.css" />
     <title>Кексобукинг</title>
   </head>
   <body>
@@ -142,6 +143,7 @@
           method="post"
           enctype="multipart/form-data"
           autocomplete="off"
+          action="https://23.javascript.pages.academy/keksobooking "
         >
           <fieldset class="ad-form-header">
             <legend class="ad-form-header__title">
@@ -162,6 +164,7 @@
                   id="avatar"
                   name="avatar"
                   class="ad-form-header__input visually-hidden"
+                  accept="image/jpeg,image/png"
                 />
                 <label class="ad-form-header__drop-zone" for="avatar"
                   >Загрузить<br />фото...</label
@@ -185,6 +188,9 @@
               name="title"
               type="text"
               placeholder="Милая, уютная квартирка в центре Токио"
+              minlength="30"
+              maxlength="100"
+              required
             />
           </fieldset>
           <fieldset class="ad-form__element ad-form__element--wide">
@@ -204,7 +210,14 @@
           </fieldset>
           <fieldset class="ad-form__element">
             <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-            <input id="price" name="price" type="number" placeholder="5000" />
+            <input
+              id="price"
+              name="price"
+              required
+              type="number"
+              placeholder="5000"
+              max="1000000"
+            />
           </fieldset>
           <fieldset class="ad-form__element ad-form__element--time">
             <label class="ad-form__label" for="timein"
@@ -327,6 +340,7 @@
                   id="images"
                   name="images"
                   class="ad-form__input visually-hidden"
+                  accept="image/jpeg,image/png"
                 />
                 <label for="images" class="ad-form__drop-zone"
                   >Загрузить<br />фото...</label
@@ -459,5 +473,7 @@
     </template>
 
     <script src="/js/main.js" type="module"></script>
+    <script src="/leaflet/leaflet/leaflet.js"></script>
+    <script src="/leaflet/leaflet/leaflet.js.map"></script>
   </body>
 </html>
