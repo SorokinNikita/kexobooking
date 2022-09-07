@@ -23,8 +23,6 @@ const activatePage = () => {
       adFormItems[i].removeAttribute('disabled', 'disabled')
     }
 
-    adFormItems[2].setAttribute('disabled', 'disabled');
-
     for (let i = 0; i < mapFiltersItems.length; i++) {
       mapFiltersItems[i].removeAttribute('disabled', 'disabled')
   }

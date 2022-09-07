@@ -7,8 +7,8 @@ const map = L.map('map-canvas')
   inditifycationMap = true;
 })
   .setView({
-    lat: 35.4200,
-    lng: 139.2530,
+    lat: 35.41255,
+    lng: 139.41238
   }, 10);
 
   L.tileLayer(
@@ -17,7 +17,6 @@ const map = L.map('map-canvas')
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-console.log(L)
 
 const mainPinIcon = L.icon({
   iconUrl : './leaflet/img/main-pin.svg',
@@ -27,8 +26,8 @@ const mainPinIcon = L.icon({
 
 const marker = L.marker(
   {
-    lat: 35.4122,
-    lng: 139.4130,
+    lat: 35.41255,
+    lng: 139.41238
   },
   {
     draggable: true,
@@ -51,7 +50,6 @@ declarationsArray.forEach(({location},index) => {
   {
     icon : sameIcon
   })
-  console.log(blocks[index])
   sameMarker
     .addTo(map)
     .bindPopup(blocks[index])

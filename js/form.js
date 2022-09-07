@@ -6,8 +6,10 @@ const feature = document.querySelectorAll('.map__checkbox');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const address = document.querySelector('#address');
+const capacity = document.querySelector('#capacity');
+const roomNumber = document.querySelector('#room_number');
 
-typeOfHouse.addEventListener('change', function () {
+typeOfHouse.addEventListener('change',  () => {
   switch(typeOfHouse.value) {
     case 'palace' : minPrice.min = 10000, minPrice.placeholder = 10000;
     break
@@ -30,7 +32,7 @@ timeIn.addEventListener('change', function () {
   }
 })
 
-timeOut.addEventListener('change', function () {
+timeOut.addEventListener('change', ()=> {
   switch(timeOut.value) {
     case '12:00' : timeIn.value = '12:00'
     break
@@ -45,5 +47,42 @@ address.value = Object.values(marker._latlng)
 
 marker.on('moveend', (evt) => {
   let cords = Object.values(evt.target.getLatLng());
-  address.value = cords[0].toFixed(6) + ', ' + cords[1].toFixed(6);
+  address.value = cords[0].toFixed(5) + ', ' + cords[1].toFixed(5);
+})
+
+roomNumber.addEventListener('change', ()=> {
+  capacity.setCustomValidity('')
+    if ((roomNumber.value === '1' && capacity.value > '1') || (roomNumber.value === '1' && capacity.value === '0')) {
+    roomNumber.setCustomValidity('в одну комнату один гость')
+  } else if (roomNumber.value === '2' && capacity.value > '2') {
+    roomNumber.setCustomValidity('Маловато комнат')
+  } else if (roomNumber.value === '2' && capacity.value === '0') {
+    roomNumber.setCustomValidity('Многовато гостей для двух комнат')
+  } else if (roomNumber.value === '3' && capacity.value ==='0') {
+    roomNumber.setCustomValidity('Нужно больше комнат');
+  } else if (roomNumber.value === '100' && capacity.value > 0) {
+    roomNumber.setCustomValidity('Слишком много комнат')
+  } else {
+    roomNumber.setCustomValidity('')
+  }
+  roomNumber.reportValidity()
+})
+
+capacity.addEventListener('change', ()=> {
+  roomNumber.setCustomValidity('')
+    if ((roomNumber.value === '1' && capacity.value > '1') || (roomNumber.value === '1' && capacity.value === '0')) {
+    capacity.setCustomValidity('в одну комнату один гость')
+  } else if (roomNumber.value === '2' && capacity.value > '2') {
+    capacity.setCustomValidity('Многовато гостей для двух комнат')
+  } else if (roomNumber.value === '2' && capacity.value === '0') {
+    capacity.setCustomValidity('Многовато гостей для двух комнат')
+  } else if (roomNumber.value === '3' && capacity.value ==='0') {
+    capacity.setCustomValidity('Нужно больше комнат')
+  } else if (roomNumber.value === '100' && capacity.value > 0) {
+    capacity.setCustomValidity('Слишком много комнат')
+    roomNumber.setCustomValidity('')
+  } else {
+    capacity.setCustomValidity('')
+  }
+  capacity.reportValidity()
 })
