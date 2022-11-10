@@ -1,23 +1,12 @@
-const getRandomInt = (max, min) => {
-  if (max < 0 || min < 0) {
-    return -1;
-  }
-  if (min > max) {
-    [min, max] = [max, min];
-  }
+const Keys = {
+  ESC: 'Esc',
+  ESCAPE: 'Escape',
+}
 
-  return Math.floor(Math.random() * (max-min + 1) + min);
-};
+const checkEsc = (evt) => {
+  return evt.key === Keys.ESC || evt.key === Keys.ESCAPE;
+}
 
-const getRandomNumber = (max, min, n) => {
-  if (max < 0 || min < 0) {
-    return -1;
-  }
-  if (min > max) {
-    [min, max] = [max, min];
-  }
-  let RandomNumber = (Math.random() * (max-min + 1)) + min;
-  return +RandomNumber.toFixed(n);
-};
 
-export {getRandomInt, getRandomNumber};
+
+export {checkEsc}

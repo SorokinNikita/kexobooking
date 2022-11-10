@@ -1,17 +1,13 @@
-import { declarationsArray } from "./data.js";
-import { getRandomInt } from "./util.js";
 const map = document.querySelector('.map');
 
 const card = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const declarations = declarationsArray;
-console.log(declarationsArray)
-
 const fragment = document.createDocumentFragment();
 
-declarations.forEach(({author, location, offer}) => {
+const renderDeclarations = (data) => {
+  data.forEach(({author, location, offer})=>{
   const cardElement = card.cloneNode(true);
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
@@ -44,27 +40,39 @@ declarations.forEach(({author, location, offer}) => {
   for (let i = popupFeatures.children.length - 1; i >= 0; i--) {
   const child = popupFeatures.children[i];
   child.parentElement.removeChild(child);
-}
+} try {
   for (let i = 0; i < offer.features.length; i++) {
   const popupFeature = document.createElement('li');
   popupFeature.classList.add('popup__feature');
   popupFeature.classList.add('popup__feature--' + offer.features[i]);
   popupFeatures.appendChild(popupFeature);
   }
+} catch (err) {
+  cardElement.removeChild(popupFeatures);
+}
   cardElement.querySelector('.popup__description').textContent = offer.description;
   let picture =  cardElement.querySelector('.popup__photos img');
   let popupPhotos =  cardElement.querySelector('.popup__photos');
+  try {
   for (let i = 0; i < offer.photos.length-1; i++) {
     popupPhotos.appendChild(picture.cloneNode());
+  }}
+  catch (err) {
+    cardElement.removeChild(popupPhotos);
   }
   let photo = popupPhotos.children;
+  try {
   for (let i = 0; i < photo.length; i++) {
     photo[i].src = offer.photos[i];
-  }
+  }}
+  catch(err) {
+    console.log('Нет фотографий: '+err.message, err.stack)
+  };
   cardElement.querySelector('.popup__avatar').src = author.avatar;
-  fragment.appendChild(cardElement);
+  fragment.appendChild(cardElement)
 })
+return fragment
+}
 
-const blocks = fragment.children;
 
-export {blocks}
+export {renderDeclarations}

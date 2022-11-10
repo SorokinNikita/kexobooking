@@ -1,11 +1,7 @@
-import { marker } from "./map.js";
-
 const typeOfHouse = document.querySelector('#type');
 const minPrice = document.querySelector('#price');
-const feature = document.querySelectorAll('.map__checkbox');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
-const address = document.querySelector('#address');
 const capacity = document.querySelector('#capacity');
 const roomNumber = document.querySelector('#room_number');
 
@@ -41,13 +37,6 @@ timeOut.addEventListener('change', ()=> {
     case '14:00' : timeIn.value = '14:00'
     break
   }
-})
-
-address.value = Object.values(marker._latlng)
-
-marker.on('moveend', (evt) => {
-  let cords = Object.values(evt.target.getLatLng());
-  address.value = cords[0].toFixed(5) + ', ' + cords[1].toFixed(5);
 })
 
 roomNumber.addEventListener('change', ()=> {
