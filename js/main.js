@@ -1,15 +1,18 @@
 'use strict';
 
 import "/js/send-ad.js";
-import {markersRendering} from "/js/map.js";
+import {map} from "/js/map.js";
 import {createFetch} from "/js/fetch.js";
 import { renderDeclarations } from "./declarations.js";
 import "/js/util.js";
-import "/js/validation.js";
+import "/js/send-form.js";
+import "/js/filters.js"
+import {onChangeForm } from "./filters.js";
 
 const onSuccess = (data) => {
-  let declarations =  renderDeclarations(data);
-  markersRendering(data, declarations);
+  console.log(data)
+  renderDeclarations(data);
+  onChangeForm(()=> renderDeclarations(data))
 };
 
 const onError = (err) => {

@@ -1,13 +1,24 @@
-const map = document.querySelector('.map');
-
+import { compareAd } from "./filters.js";
+import {sameIcon, map} from "./map.js"
+// const map = document.querySelector('.map');
+let markers
 const card = document.querySelector('#card')
   .content
   .querySelector('.popup');
-
 const fragment = document.createDocumentFragment();
-
 const renderDeclarations = (data) => {
-  data.forEach(({author, location, offer})=>{
+  const leaflet = document.querySelector('.leaflet-marker-pane')
+  for (let i = fragment.children.length - 1; i >= 0; i--) {
+    fragment.removeChild(fragment.children[i])
+  }
+  for (let i = leaflet.children.length - 1; i > 0; i--) {
+    leaflet.removeChild(leaflet.children[i])
+  }
+  data
+  .slice()
+  .sort(compareAd)
+  .slice(0, 10)
+  .forEach(({author, location, offer}, index)=>{
   const cardElement = card.cloneNode(true);
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
@@ -70,9 +81,22 @@ const renderDeclarations = (data) => {
   };
   cardElement.querySelector('.popup__avatar').src = author.avatar;
   fragment.appendChild(cardElement)
+  for (let i = 1; i <= 10; i++) {
+
+  }
+  markers = L.marker ({
+          lat : location.lat,
+          lng : location.lng
+        },
+        {
+            icon : sameIcon
+        })
+        markers
+        .addTo(map)
+        .bindPopup(cardElement)
 })
+console.log(fragment)
 return fragment
 }
-
 
 export {renderDeclarations}

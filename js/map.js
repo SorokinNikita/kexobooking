@@ -4,19 +4,19 @@ const address = document.querySelector('#address');
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    activatePage();
+    activatePage()
 })
   .setView({
     lat: 35.41255,
     lng: 139.41238
-  }, 10);
+  }, 10)
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
-).addTo(map);
+).addTo(map)
 
 const mainPinIcon = L.icon({
   iconUrl : './leaflet/img/main-pin.svg',
@@ -42,20 +42,6 @@ const sameIcon = L.icon({
   iconAnchor: [20, 40],
 })
 
-const markersRendering = (declarationsData, declarations) => {
-declarationsData.forEach(({location},index) => {
-        const sameMarker = L.marker ({
-          lat : location.lat,
-          lng : location.lng
-        },
-        {
-            icon : sameIcon
-        })
-        sameMarker
-          .addTo(map)
-          .bindPopup(declarations.children[index])
-})
-}
 
 const setStartAddress = () => {
   marker.setLatLng([35.41255, 139.41238])
@@ -68,4 +54,4 @@ marker.on('move', (evt) => {
   address.value = cords[0].toFixed(5) + ', ' + cords[1].toFixed(5);
 })
 
-export {marker, markersRendering, setStartAddress}
+export {marker, setStartAddress, map, sameIcon}
