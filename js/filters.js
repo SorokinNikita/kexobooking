@@ -9,38 +9,34 @@ filtersForm.addEventListener('change', () => {
   map.closePopup()
 })
 
-const getRank = (data) => {
-  const housingType = document.querySelector('#housing-type')
-  const housingPrice = document.querySelector('#housing-price')
-  const housingRooms = document.querySelector('#housing-rooms')
-  const housingGuests = document.querySelector('#housing-guests')
-  let rank = 0
-  if (housingType.value === data.offer.type || housingType.value === 'any') {
-    rank += 2
+const adsFiltration = (data) => {
+  const housingType = document.querySelector('#housing-type');
+  const housingPrice = document.querySelector('#housing-price');
+  const housingRooms = document.querySelector('#housing-rooms');
+  const housingGuests = document.querySelector('#housing-guests');
+  const features = document.querySelector('#housing-features')
+  const choisenFeatures = features.querySelectorAll(':checked');
+  let isFeatures = Boolean
+  if (choisenFeatures.length > 0 && data.offer.features && choisenFeatures.length === data.offer.features.length) {
+    for (let i = 0; i < choisenFeatures.length; i++) {
+      isFeatures = data.offer.features.includes(choisenFeatures[i].value)
+      console.log(isFeatures)
+    }
   }
-  if ((housingPrice.value === 'middle' && (data.offer.price > 10000 && data.offer.price < 50000))|| housingPrice.value === 'any') {
-    rank += 2
-  } else if ((housingPrice.value === 'low' && data.offer.price < 10000) || housingPrice.value === 'any') {
-    rank += 2
-  } else if ((housingPrice.value === 'high' && data.offer.price > 50000) || housingPrice.value === 'any') {
-    rank += 2
-  } if (housingRooms.value === data.offer.rooms || housingRooms.value === 'any') {
-    rank += 2
+  if (choisenFeatures.length > 0 && !data.offer.features) {
+    isFeatures = false
   }
-  if (housingGuests.value === data.offer.guests || housingGuests.value === 'any') {
-    rank += 2
+  if (choisenFeatures.length > 0 && data.offer.features && choisenFeatures.length !== data.offer.features.length) {
+    isFeatures = false
+  }
+  return (housingType.value === data.offer.type || housingType.value === 'any') &&
+  ((housingPrice.value === 'middle' && (data.offer.price > 10000 && data.offer.price < 50000) || housingPrice.value === 'any') ||
+  ((housingPrice.value === 'low' && data.offer.price < 10000) || housingPrice.value === 'any') ||
+  ((housingPrice.value === 'high' && data.offer.price > 50000) || housingPrice.value === 'any')) &&
+  ((Number(housingRooms.value) === data.offer.rooms || housingRooms.value === 'any')) &&
+  ((Number(housingGuests.value) === data.offer.guests || housingGuests.value === 'any')) && isFeatures
+}
 
-  }
-  const features = document.querySelector('.map__features')
-  const selectedFeatures = features.querySelectorAll(':checked')
-  for (let i = 0; i < selectedFeatures.length; i++) {
-    console.log(selectedFeatures.length)
-  if (data.offer.features === selectedFeatures[i]) {
-      rank+=2
-  }
-}
-  return rank
-}
 
 const compareAd = (adA, adB) => {
   const rankA = getRank(adA);
@@ -48,4 +44,6 @@ const compareAd = (adA, adB) => {
   return rankB - rankA;
 }
 
-export {compareAd, onChangeForm, getRank}
+
+
+export {compareAd, onChangeForm, adsFiltration}

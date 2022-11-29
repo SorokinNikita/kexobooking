@@ -1,4 +1,4 @@
-import { compareAd } from "./filters.js";
+import { compareAd, adsFiltration} from "./filters.js";
 import {sameIcon, map} from "./map.js"
 // const map = document.querySelector('.map');
 let markers
@@ -15,8 +15,7 @@ const renderDeclarations = (data) => {
     leaflet.removeChild(leaflet.children[i])
   }
   data
-  .slice()
-  .sort(compareAd)
+  .filter(adsFiltration)
   .slice(0, 10)
   .forEach(({author, location, offer}, index)=>{
   const cardElement = card.cloneNode(true);
@@ -81,9 +80,6 @@ const renderDeclarations = (data) => {
   };
   cardElement.querySelector('.popup__avatar').src = author.avatar;
   fragment.appendChild(cardElement)
-  for (let i = 1; i <= 10; i++) {
-
-  }
   markers = L.marker ({
           lat : location.lat,
           lng : location.lng
