@@ -4,6 +4,49 @@ const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const capacity = document.querySelector('#capacity');
 const roomNumber = document.querySelector('#room_number');
+const avatarInput = document.querySelector('.ad-form-header__input');
+const avatarPreviewContainer = document.querySelector('.ad-form-header__preview');
+const avatarPreview = avatarPreviewContainer.querySelector('img');
+const photoInput = document.querySelector('.ad-form__input');
+const photoPreviewContainer = document.querySelector('.ad-form__photo');
+const IMAGE_TYPES = ['jpg', 'png']
+
+avatarInput.addEventListener('change', () => {
+  const fileAvatar = avatarInput.files[0];
+  const fileAvatarName = fileAvatar.name.toLowerCase();
+  const accepted = IMAGE_TYPES.some((it) => {
+    return fileAvatarName.endsWith(it);
+  })
+  if(accepted) {
+    const reader = new FileReader();
+    reader.addEventListener('load', ()=>{
+      avatarPreview.src = reader.result;
+    });
+
+    reader.readAsDataURL(fileAvatar)
+  }
+})
+
+photoInput.addEventListener('change', () => {
+  const fileAvatar = photoInput.files[0];
+  const fileAvatarName = fileAvatar.name.toLowerCase();
+  const accepted = IMAGE_TYPES.some((it) => {
+    return fileAvatarName.endsWith(it);
+  })
+  if(accepted) {
+    const reader = new FileReader();
+    const photoPreview = document.createElement('img')
+    photoPreview.width = 70
+    photoPreview.height = 70
+    photoPreviewContainer.appendChild(photoPreview)
+    reader.addEventListener('load', ()=>{
+      photoPreview.src = reader.result;
+    });
+
+    reader.readAsDataURL(fileAvatar)
+  }
+})
+
 
 typeOfHouse.addEventListener('change',  () => {
   switch(typeOfHouse.value) {

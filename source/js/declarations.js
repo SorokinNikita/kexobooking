@@ -1,4 +1,4 @@
-import { compareAd, adsFiltration} from "./filters.js";
+import {adsFiltration} from "./filters.js";
 import {sameIcon, map} from "./map.js"
 // const map = document.querySelector('.map');
 let markers
@@ -15,6 +15,7 @@ const renderDeclarations = (data) => {
     leaflet.removeChild(leaflet.children[i])
   }
   data
+  .slice()
   .filter(adsFiltration)
   .slice(0, 10)
   .forEach(({author, location, offer}, index)=>{
@@ -26,6 +27,8 @@ const renderDeclarations = (data) => {
     case 'bungalow': cardElement.querySelector('.popup__type').textContent = 'Бунгало';
     break
     case 'flat': cardElement.querySelector('.popup__type').textContent = 'Квартира';
+    break
+    case 'hotel': cardElement.querySelector('.popup__type').textContent = 'Отель';
     break
     case 'house': cardElement.querySelector('.popup__type').textContent = 'Дом';
     break
